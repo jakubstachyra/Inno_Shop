@@ -22,4 +22,13 @@ public class UsersController : ControllerBase
             registerUserDto.Email, registerUserDto.Password);
         return CreatedAtAction(nameof(Register), new { id = user.ID });
     }
+    [HttpPost("login")]
+    public async Task<IActionResult> LoginU(LoginUserDto loginUserDto)
+    {
+        var token = await _userService.AuthenticateAndGenerateTokenAsync(loginUserDto.Email, loginUserDto.Password);
+        
+        if(token == null) { return NotFound("Invalid email or password"); }
+
+        return Ok(token);
+    }
 }
