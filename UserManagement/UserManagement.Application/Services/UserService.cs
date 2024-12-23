@@ -18,10 +18,11 @@ public class UserService(IUserRepository userRepository): IUserService
             Email = email,
             PasswordHash = passwordHash,
             Role = "User",
-            IsActive = true
+            IsActive = false
         };
 
         await _userRepository.AddAsync(user);
+        await _userRepository.SaveChangesAsync();
         return user;
     }
 }

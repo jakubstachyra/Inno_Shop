@@ -20,6 +20,6 @@ public class UsersController : ControllerBase
     {
         var user = await _userService.RegisterUserAsync(registerUserDto.Name,
             registerUserDto.Email, registerUserDto.Password);
-        return CreatedAtAction(nameof(Register), new { id = user.ID }, user);
+        return CreatedAtAction(nameof(Register), new { id = user.ID });
     }
 }
