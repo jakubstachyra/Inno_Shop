@@ -8,5 +8,15 @@ namespace UserManagement.Infrastructure.Data
         public DbSet<User> Users { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.ID);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.ID)
+                .ValueGeneratedOnAdd();
+        }
     }
 }
