@@ -4,6 +4,7 @@ using UserManagement.Application.Services;
 using UserManagement.Infrastructure.Data;
 using UserManagement.Infrastructure.Interfaces;
 using UserManagement.Infrastructure.Repositories;
+using UserManagement.Infrastructure.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 var app = builder.Build();
