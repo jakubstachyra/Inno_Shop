@@ -17,7 +17,11 @@ public class Repository<T> : IRepository<T> where T : class
     {
         return await _dbSet.ToListAsync();
     }
-
+    public async Task<bool> UpdateAsync(T entity)
+    {
+        _dbSet.Update(entity);
+        return await _context.SaveChangesAsync() == 1;
+    }
     public async Task<T?> GetByIDAsync(int ID)  
     {
        return  await _dbSet.FindAsync(ID);

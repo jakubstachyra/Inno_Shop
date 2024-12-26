@@ -18,8 +18,7 @@ public class UsersController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
     {
-        var user = await _userService.RegisterUserAsync(registerUserDto.Name,
-            registerUserDto.Email, registerUserDto.Password);
+        var user = await _userService.RegisterUserAsync(registerUserDto);
         return CreatedAtAction(nameof(Register), new { id = user.ID });
     }
     [HttpPost("login")]

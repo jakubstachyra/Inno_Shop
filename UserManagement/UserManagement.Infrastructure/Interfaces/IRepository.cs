@@ -8,5 +8,5 @@ public interface IRepository<T>
     Task<T?> GetByIDAsync(int id);
     Task<List<T>> GetByConditionAsync(Expression<Func<T, bool>> predicate);
     Task<IEnumerable<T>> GetAllAsync();
-
+    Task<bool> UpdateAsync(T entity);
 }
