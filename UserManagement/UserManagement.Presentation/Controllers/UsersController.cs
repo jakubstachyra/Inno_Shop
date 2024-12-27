@@ -22,12 +22,44 @@ public class UsersController : ControllerBase
         return CreatedAtAction(nameof(Register), new { id = user.ID });
     }
     [HttpPost("login")]
-    public async Task<IActionResult> LoginU(LoginUserDto loginUserDto)
+    public async Task<IActionResult> Login(LoginUserDto loginDto)
     {
-        var token = await _userService.AuthenticateAndGenerateTokenAsync(loginUserDto.Email, loginUserDto.Password);
-        
-        if(token == null) { return NotFound("Invalid email or password"); }
-
-        return Ok(token);
+        try
+        {
+            var token = await _userService.AuthenticateAndGenerateTokenAsync(loginDto.Email, loginDto.Password);
+            return Ok(new { token });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
     }
+
+    [HttpGet("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail(string token)
+    {
+        try
+        {
+            await _userService.ConfirmEmailAsync(token);
+            return Ok(new { message = "Account confirmed successfully!" });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> SoftDeleteUser(int id)
+    {
+        try
+        {
+            await _userService.SoftDeleteUserAsync(id);
+            return Ok(new { message = "User soft deleted successfully." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
+
 }

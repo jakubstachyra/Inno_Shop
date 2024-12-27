@@ -70,6 +70,11 @@ public class UserService(IUserRepository userRepository,
             return null!;
         }
 
+        if (!user.IsActive)
+        {
+            throw new InvalidOperationException("Account is not confirmed. Please check your email to confirm your account.");
+        }
+
         var token = GenerateJwtToken(user);
         return token;
     }
@@ -112,6 +117,10 @@ public class UserService(IUserRepository userRepository,
         await _userRepository.UpdateAsync(user);
 
         return true;
+    }
+    public async Task SoftDeleteUserAsync(int userId)
+    {
+        await _userRepository.SoftDeleteAsync(userId);
     }
 
 

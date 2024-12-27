@@ -17,6 +17,9 @@ namespace UserManagement.Infrastructure.Data
             modelBuilder.Entity<User>()
                 .Property(u => u.ID)
                 .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDeleted);
         }
+
     }
 }
