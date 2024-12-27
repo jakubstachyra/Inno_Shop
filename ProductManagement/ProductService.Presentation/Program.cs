@@ -46,7 +46,17 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    if (builder.Environment.IsEnvironment("Testing"))
+    {
+        options.UseInMemoryDatabase("InMemoryDbForTesting");
+    }
+    else
+    {
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    }
+});
+
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductsService>();
@@ -87,3 +97,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

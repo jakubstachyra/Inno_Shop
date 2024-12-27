@@ -18,20 +18,38 @@ public class UsersController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
     {
-        var user = await _userService.RegisterUserAsync(registerUserDto);
-        return CreatedAtAction(nameof(Register), new { id = user.ID });
+        try
+        {
+            var user = await _userService.RegisterUserAsync(registerUserDto);
+            return CreatedAtAction(nameof(Register), new { id = user.ID });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An unexpected error occurred.", detail = ex.Message });
+        }
     }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginUserDto loginDto)
     {
         try
         {
             var token = await _userService.AuthenticateAndGenerateTokenAsync(loginDto.Email, loginDto.Password);
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized(new { message = "Invalid email or password." });
+            }
+
             return Ok(new { token });
         }
-        catch (InvalidOperationException ex)
+        catch (Exception ex)
         {
-            return Unauthorized(new { message = ex.Message });
+            return StatusCode(500, new { message = "An unexpected error occurred.", detail = ex.Message });
         }
     }
 
@@ -40,14 +58,20 @@ public class UsersController : ControllerBase
     {
         try
         {
-            await _userService.ConfirmEmailAsync(token);
+            var result = await _userService.ConfirmEmailAsync(token);
+            if (!result)
+            {
+                return BadRequest(new { message = "Invalid or expired token." });
+            }
+
             return Ok(new { message = "Account confirmed successfully!" });
         }
-        catch (InvalidOperationException ex)
+        catch (Exception ex)
         {
-            return BadRequest(new { message = ex.Message });
+            return StatusCode(500, new { message = "An unexpected error occurred.", detail = ex.Message });
         }
     }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)
     {
@@ -62,6 +86,7 @@ public class UsersController : ControllerBase
         }
     }
 
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> SoftDeleteUser(int id)
     {
@@ -74,7 +99,12 @@ public class UsersController : ControllerBase
         {
             return NotFound(new { message = ex.Message });
         }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
     }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(int id, UpdateUserDto updateUserDto)
     {
