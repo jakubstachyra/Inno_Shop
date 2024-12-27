@@ -14,6 +14,6 @@ namespace UserManagement.Application.Interfaces
         Task<User> GetUserByIdAsync(int userId);
         Task SoftDeleteUserAsync(int userId);
         Task UpdateUserAsync(int userId, UpdateUserDto updateUserDto);
-
+        Task ChangePasswordAsync(ChangePasswordDto changePasswordDto);
     }
 }

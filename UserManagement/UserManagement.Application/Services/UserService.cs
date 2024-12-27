@@ -154,4 +154,24 @@ public class UserService(IUserRepository userRepository,
     {
         await _userRepository.SoftDeleteAsync(userId);
     }
+    public async Task ChangePasswordAsync(ChangePasswordDto changePasswordDto)
+    {
+        var users = await _userRepository.GetAllAsync();
+        var user = users.Where(u => u.ID == changePasswordDto.UserId && !u.IsDeleted)
+            .FirstOrDefault();
+
+        if (user == null)
+        {
+            throw new InvalidOperationException("User not found.");
+        }
+
+        if (!BCrypt.Net.BCrypt.Verify(changePasswordDto.OldPassword, user.PasswordHash))
+        {
+            throw new InvalidOperationException("Old password is incorrect.");
+        }
+
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(changePasswordDto.NewPassword);
+        await _userRepository.UpdateAsync(user);
+    }
+
 }

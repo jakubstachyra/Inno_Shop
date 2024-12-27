@@ -88,5 +88,18 @@ public class UsersController : ControllerBase
             return NotFound(new { message = ex.Message });
         }
     }
-    
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+    {
+        try
+        {
+            await _userService.ChangePasswordAsync(changePasswordDto);
+            return Ok(new { message = "Password changed successfully." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
 }
