@@ -93,12 +93,13 @@ public class UserService(IUserRepository userRepository,
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: "UserManagmentService",
-            audience: "ProductManagerService",
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(1),
-            signingCredentials: creds
-            );
+            issuer: _configuration["Jwt:Issuer"],     
+            audience: _configuration["Jwt:Audience"],  
+            claims: claims,                           
+            expires: DateTime.UtcNow.AddHours(1),     
+            signingCredentials: creds                
+        );
+
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }

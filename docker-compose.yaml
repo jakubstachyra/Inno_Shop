@@ -13,5 +13,40 @@ services:
     volumes:
       - user_data:/var/lib/postgresql/data
 
+  product_postgres:
+    image: postgres:15
+    container_name: product_service
+    ports:
+      - "${PRODUCT_POSTGRES_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${PRODUCT_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PRODUCT_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${PRODUCT_POSTGRES_DB}
+    volumes:
+      - product_data:/var/lib/postgresql/data
+
+  user_service:
+    image: mcr.microsoft.com/dotnet/aspnet:7.0
+    container_name: aspnet_user_service
+    ports:
+      - "${USER_SERVICE_PORT}:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=postgres;Database=${POSTGRES_DB};User Id=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};
+    depends_on:
+      - postgres
+
+  product_service:
+    image: mcr.microsoft.com/dotnet/aspnet:7.0
+    container_name: aspnet_product_service
+    ports:
+      - "${PRODUCT_SERVICE_PORT}:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=product_postgres;Database=${PRODUCT_POSTGRES_DB};User Id=${PRODUCT_POSTGRES_USER};Password=${PRODUCT_POSTGRES_PASSWORD};
+    depends_on:
+      - product_postgres
+
 volumes:
   user_data:
+  product_data:
