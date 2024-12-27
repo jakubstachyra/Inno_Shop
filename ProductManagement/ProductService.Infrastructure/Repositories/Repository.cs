@@ -14,14 +14,19 @@ namespace ProductService.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<IEnumerable<Product>> GetAllByUserIdAsync(int userId)
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                .Where(p => p.CreatorUserID == userId && !p.IsDeleted)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Product?> GetByIdAsync(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.ID == id);
         }
 
         public async Task AddAsync(Product product)
@@ -42,5 +47,6 @@ namespace ProductService.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
     }
+
 
 }
