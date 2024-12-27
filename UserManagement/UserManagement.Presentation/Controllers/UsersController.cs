@@ -48,6 +48,20 @@ public class UsersController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetUserById(int id)
+    {
+        try
+        {
+            var user = await _userService.GetUserByIdAsync(id);
+            return Ok(user);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> SoftDeleteUser(int id)
     {
@@ -61,5 +75,18 @@ public class UsersController : ControllerBase
             return NotFound(new { message = ex.Message });
         }
     }
-
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUser(int id, UpdateUserDto updateUserDto)
+    {
+        try
+        {
+            await _userService.UpdateUserAsync(id, updateUserDto);
+            return Ok(new { message = "User updated successfully." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
+    
 }

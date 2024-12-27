@@ -118,10 +118,40 @@ public class UserService(IUserRepository userRepository,
 
         return true;
     }
+    public async Task UpdateUserAsync(int userId, UpdateUserDto updateUserDto)
+    {
+        var users = await _userRepository.GetAllAsync();
+        var user =  users.Where(u => u.ID == userId && !u.IsDeleted)
+            .FirstOrDefault();
+
+        if (user == null)
+        {
+            throw new InvalidOperationException("User not found.");
+        }
+
+        user.Name = updateUserDto.Name ?? user.Name;
+        user.Email = updateUserDto.Email ?? user.Email;
+
+        await _userRepository.UpdateAsync(user);
+    }
+    public async Task<User> GetUserByIdAsync(int userId)
+    {
+        var users = await _userRepository.GetAllAsync();
+        var user = users.Where(u => u.ID == userId && !u.IsDeleted)
+            .FirstOrDefault();
+
+        if (user == null)
+        {
+            throw new InvalidOperationException("User not found.");
+        }
+
+        user.PasswordHash = null!;
+
+        return user;
+    }
+
     public async Task SoftDeleteUserAsync(int userId)
     {
         await _userRepository.SoftDeleteAsync(userId);
     }
-
-
 }
