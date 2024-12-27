@@ -15,13 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserManagement.Presentation
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductManagement", "ProductManagement", "{15C34657-6369-4CD6-9328-9CD8F09412FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Presentation", "ProductManagement\ProductService.Presentation\ProductService.Presentation.csproj", "{57AF6265-71DD-460F-8C54-A0E1A5BCBF37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Presentation", "ProductManagement\ProductService.Presentation\ProductService.Presentation.csproj", "{57AF6265-71DD-460F-8C54-A0E1A5BCBF37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Domain", "ProductManagement\ProductService.Domain\ProductService.Domain.csproj", "{786F0B25-C28E-46AF-8980-DCFBBFE77902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Domain", "ProductManagement\ProductService.Domain\ProductService.Domain.csproj", "{786F0B25-C28E-46AF-8980-DCFBBFE77902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Infrastructure", "ProductManagement\ProductService.Infrastructure\ProductService.Infrastructure.csproj", "{67DC6F32-3B99-4F7F-A71C-693A6E55556E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Infrastructure", "ProductManagement\ProductService.Infrastructure\ProductService.Infrastructure.csproj", "{67DC6F32-3B99-4F7F-A71C-693A6E55556E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Application", "ProductManagement\ProductService.Application\ProductService.Application.csproj", "{48D73F0A-92DC-4313-8483-4D4A2EFA9BDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Application", "ProductManagement\ProductService.Application\ProductService.Application.csproj", "{48D73F0A-92DC-4313-8483-4D4A2EFA9BDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.UnitTests", "UserManagement\UnitTests\UserManagement.UnitTests.csproj", "{C0E343E2-77F2-40D6-ACDD-106676DB8D8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{48D73F0A-92DC-4313-8483-4D4A2EFA9BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48D73F0A-92DC-4313-8483-4D4A2EFA9BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48D73F0A-92DC-4313-8483-4D4A2EFA9BDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E343E2-77F2-40D6-ACDD-106676DB8D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E343E2-77F2-40D6-ACDD-106676DB8D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E343E2-77F2-40D6-ACDD-106676DB8D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E343E2-77F2-40D6-ACDD-106676DB8D8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{786F0B25-C28E-46AF-8980-DCFBBFE77902} = {15C34657-6369-4CD6-9328-9CD8F09412FF}
 		{67DC6F32-3B99-4F7F-A71C-693A6E55556E} = {15C34657-6369-4CD6-9328-9CD8F09412FF}
 		{48D73F0A-92DC-4313-8483-4D4A2EFA9BDE} = {15C34657-6369-4CD6-9328-9CD8F09412FF}
+		{C0E343E2-77F2-40D6-ACDD-106676DB8D8A} = {42C3C8D4-1E59-4BE0-946E-B02ECF433A06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F8175AD8-199D-4F8C-A01B-1293FCE8D19C}
