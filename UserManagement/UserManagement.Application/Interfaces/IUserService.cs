@@ -10,5 +10,7 @@ namespace UserManagement.Application.Interfaces
         Task<bool> ConfirmEmailAsync(string token);
 
         Task<string> AuthenticateAndGenerateTokenAsync(string email, string password);
+        Task SoftDeleteUserAsync(int userId);
+
     }
 }

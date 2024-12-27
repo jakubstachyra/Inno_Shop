@@ -2,5 +2,8 @@
 
 namespace UserManagement.Infrastructure.Interfaces
 {
-    public interface IUserRepository : IRepository<User> {}
+    public interface IUserRepository : IRepository<User> {
+        Task SoftDeleteAsync(int userId);
+    }
+
 }
